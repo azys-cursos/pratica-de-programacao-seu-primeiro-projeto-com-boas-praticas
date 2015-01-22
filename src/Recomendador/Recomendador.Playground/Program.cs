@@ -5,6 +5,10 @@ using System.Net;
 using System.Net.Mail;
 using System.Text;
 using System.Threading.Tasks;
+using MongoDB.Bson.Serialization;
+using MongoDB.Bson.Serialization.IdGenerators;
+using MongoDB.Driver;
+using MongoDB.Driver.Linq;
 using TNX.RssReader;
 
 namespace Recomendador.Playground
@@ -13,6 +17,9 @@ namespace Recomendador.Playground
     {
         static void Main(string[] args)
         {
+            var usuario = "denisferrari@azys.com.br";
+            var hoje = DateTime.Today;
+
             // Como obter os posts do Blog do Martin Fowler?
             var urlFeedBlogMartinFowler = "http://martinfowler.com/feed.atom";
 
@@ -48,15 +55,76 @@ namespace Recomendador.Playground
             mailMessage.From = new MailAddress(smtpEmail, smtpNome);
             mailMessage.Subject = artigoSelecionado.Title;
             mailMessage.Body = artigoSelecionado.Link;
-            mailMessage.To.Add("denisferrari@azys.com.br");
+            mailMessage.To.Add(usuario);
 
-            smtpClient.Send(mailMessage);
+            // smtpClient.Send(mailMessage);
 
             Console.WriteLine("E-mail Enviado!");
 
+            Console.ReadLine();
+
             // Como salvar as recomendações em MongoDB?
 
+            var recomendacao = new Recomendacao()
+            {
+                Usuario = usuario,
+                Artigo = artigoSelecionado.Link,
+                Data = hoje
+            };
 
+            var connectionString = "mongodb://r2d2:dfs465789ds47815@ds031541.mongolab.com:31541/recomendador";
+            var database = new MongoUrl(connectionString).DatabaseName;
+            var mongodb = new MongoClient(connectionString)
+                .GetServer()
+                .GetDatabase(database);
+
+            BsonClassMap.RegisterClassMap<Recomendacao>(cm =>
+            {
+                cm.AutoMap();
+                cm.IdMemberMap.SetIdGenerator(CombGuidGenerator.Instance);
+            });
+
+            var recomendacoes = mongodb.GetCollection<Recomendacao>("Recomendacoes");
+
+            recomendacoes.Insert(recomendacao);
+
+            Console.WriteLine("Recomendação Registrada!");
+            Console.WriteLine("");
+            Console.ReadLine();
+
+            Console.WriteLine("Recomendações feitas até o momento!");
+            Console.WriteLine("");
+
+            var recomendacoesFeitas = recomendacoes.AsQueryable();
+
+            foreach (var recomendacaoFeita in recomendacoesFeitas)
+            {
+                Console.WriteLine(recomendacaoFeita.Artigo);
+            }
+
+            Console.ReadLine();
+
+            Console.WriteLine("Há recomendações para esse usuário hoje?");
+            Console.WriteLine("");
+
+            var haRecomendacoes = recomendacoes
+                                    .AsQueryable()
+                                    .Any(r => r.Usuario == usuario && r.Data == hoje);
+
+            Console.WriteLine(haRecomendacoes);
+
+            Console.ReadLine();
+        }
+
+        public class Recomendacao
+        {
+            public Guid Id { get; set; }
+
+            public string Usuario { get; set; }
+
+            public string Artigo { get; set; }
+
+            public DateTime Data { get; set; }
         }
     }
 }
