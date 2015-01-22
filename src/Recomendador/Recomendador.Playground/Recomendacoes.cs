@@ -11,14 +11,16 @@ namespace Recomendador.Playground
 
         public Recomendacoes(MongoDatabase mongo)
         {
+
+
             this.Collection = mongo.GetCollection<Recomendacao>("Recomendacoes");
         }
 
-        public bool HaRecomendacoes(string usuario, DateTime data)
+        public bool HaRecomendacoes(Usuario usuario, DateTime data)
         {
             return Collection
                         .AsQueryable()
-                        .Any(r => r.Usuario == usuario && r.Data == data);
+                        .Any(r => r.Usuario == usuario.Email && r.Data == data);
         }
 
         public IQueryable<Recomendacao> ObterTodas()

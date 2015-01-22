@@ -1,16 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
+﻿using System.Net;
 using System.Net.Mail;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Recomendador.Playground
 {
     public class Gmail
     {
-        public void EnviarArtigo(string usuario, string titulo, string url)
+        public void EnviarArtigo(Usuario usuario, Artigo artigo)
         {
             var smtpNome = "Recomendador";
             var smtpEmail = "r2d2@azys.com.br";
@@ -27,9 +22,9 @@ namespace Recomendador.Playground
             var mailMessage = new MailMessage();
 
             mailMessage.From = new MailAddress(smtpEmail, smtpNome);
-            mailMessage.Subject = titulo;
-            mailMessage.Body = url;
-            mailMessage.To.Add(usuario);
+            mailMessage.Subject = artigo.Titulo;
+            mailMessage.Body = artigo.Url;
+            mailMessage.To.Add(usuario.Email);
 
             smtpClient.Send(mailMessage);
         }
