@@ -17,8 +17,48 @@ namespace Recomendador.Playground
     {
         static void Main(string[] args)
         {
+            var connectionString = "mongodb://r2d2:dfs465789ds47815@ds031541.mongolab.com:31541/recomendador";
+            var database = new MongoUrl(connectionString).DatabaseName;
+            var mongodb = new MongoClient(connectionString)
+                .GetServer()
+                .GetDatabase(database);
+
+            BsonClassMap.RegisterClassMap<Recomendacao>(cm =>
+            {
+                cm.AutoMap();
+                cm.IdMemberMap.SetIdGenerator(CombGuidGenerator.Instance);
+            });
+
+            var recomendacoes = mongodb.GetCollection<Recomendacao>("Recomendacoes");
+
             var usuario = "denisferrari@azys.com.br";
             var hoje = DateTime.Today;
+
+            Console.WriteLine("Há recomendações para esse usuário hoje?");
+            Console.WriteLine("");
+
+            var haRecomendacoes = recomendacoes
+                                    .AsQueryable()
+                                    .Any(r => r.Usuario == usuario && r.Data == hoje);
+
+            Console.WriteLine(haRecomendacoes);
+
+            Console.ReadLine();
+
+            if (haRecomendacoes)
+                return;
+
+            Console.WriteLine("Recomendações feitas até o momento!");
+            Console.WriteLine("");
+
+            var recomendacoesFeitas = recomendacoes.AsQueryable();
+
+            foreach (var recomendacaoFeita in recomendacoesFeitas)
+            {
+                Console.WriteLine(recomendacaoFeita.Artigo);
+            }
+
+            Console.ReadLine();
 
             // Como obter os posts do Blog do Martin Fowler?
             var urlFeedBlogMartinFowler = "http://martinfowler.com/feed.atom";
@@ -27,7 +67,9 @@ namespace Recomendador.Playground
 
             var posts = feed.Items;
 
-            var artigos = posts.Where(p => p.Link.Contains("articles")).ToList();
+            var artigos = posts
+                            .Where(p => p.Link.Contains("articles") && !recomendacoesFeitas.Any(r => r.Artigo == p.Link))
+                            .ToList();
 
             var random = new Random();
             var numeroAleatorio = random.Next(0, artigos.Count());
@@ -72,47 +114,10 @@ namespace Recomendador.Playground
                 Data = hoje
             };
 
-            var connectionString = "mongodb://r2d2:dfs465789ds47815@ds031541.mongolab.com:31541/recomendador";
-            var database = new MongoUrl(connectionString).DatabaseName;
-            var mongodb = new MongoClient(connectionString)
-                .GetServer()
-                .GetDatabase(database);
-
-            BsonClassMap.RegisterClassMap<Recomendacao>(cm =>
-            {
-                cm.AutoMap();
-                cm.IdMemberMap.SetIdGenerator(CombGuidGenerator.Instance);
-            });
-
-            var recomendacoes = mongodb.GetCollection<Recomendacao>("Recomendacoes");
-
             recomendacoes.Insert(recomendacao);
 
             Console.WriteLine("Recomendação Registrada!");
             Console.WriteLine("");
-            Console.ReadLine();
-
-            Console.WriteLine("Recomendações feitas até o momento!");
-            Console.WriteLine("");
-
-            var recomendacoesFeitas = recomendacoes.AsQueryable();
-
-            foreach (var recomendacaoFeita in recomendacoesFeitas)
-            {
-                Console.WriteLine(recomendacaoFeita.Artigo);
-            }
-
-            Console.ReadLine();
-
-            Console.WriteLine("Há recomendações para esse usuário hoje?");
-            Console.WriteLine("");
-
-            var haRecomendacoes = recomendacoes
-                                    .AsQueryable()
-                                    .Any(r => r.Usuario == usuario && r.Data == hoje);
-
-            Console.WriteLine(haRecomendacoes);
-
             Console.ReadLine();
         }
 
