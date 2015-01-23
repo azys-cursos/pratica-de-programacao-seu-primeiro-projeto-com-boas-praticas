@@ -1,7 +1,8 @@
 ﻿using System.Net;
 using System.Net.Mail;
+using Recomendador.Dominio;
 
-namespace Recomendador.Playground
+namespace Recomendador.Infra.Mail
 {
     public class Gmail : IServicoEmail
     {

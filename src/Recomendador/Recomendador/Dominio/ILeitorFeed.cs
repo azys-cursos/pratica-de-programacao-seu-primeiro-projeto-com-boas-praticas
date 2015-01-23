@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Recomendador.Playground
+namespace Recomendador.Dominio
 {
     public interface ILeitorFeed
     {

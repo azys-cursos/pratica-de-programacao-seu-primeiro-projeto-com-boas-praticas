@@ -1,4 +1,4 @@
-﻿namespace Recomendador.Playground
+﻿namespace Recomendador.Dominio
 {
     public interface IServicoEmail
     {

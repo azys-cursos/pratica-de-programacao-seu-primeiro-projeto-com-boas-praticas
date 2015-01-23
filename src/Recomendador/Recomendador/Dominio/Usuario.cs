@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Recomendador.Playground
+namespace Recomendador.Dominio
 {
     public class Usuario
     {

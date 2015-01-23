@@ -1,4 +1,4 @@
-﻿namespace Recomendador.Playground
+﻿namespace Recomendador.Infra.Mail
 {
     public class ContaSmtp
     {

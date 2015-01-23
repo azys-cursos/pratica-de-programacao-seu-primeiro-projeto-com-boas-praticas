@@ -12,6 +12,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{438323
 		.nuget\NuGet.targets = .nuget\NuGet.targets
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Recomendador", "Recomendador\Recomendador.csproj", "{5E93A1BA-3D41-4A06-8392-4A9B44620EE7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -22,6 +24,10 @@ Global
 		{72062813-DF10-466A-AD2D-5466BC89E2C5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{72062813-DF10-466A-AD2D-5466BC89E2C5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{72062813-DF10-466A-AD2D-5466BC89E2C5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5E93A1BA-3D41-4A06-8392-4A9B44620EE7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5E93A1BA-3D41-4A06-8392-4A9B44620EE7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5E93A1BA-3D41-4A06-8392-4A9B44620EE7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5E93A1BA-3D41-4A06-8392-4A9B44620EE7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

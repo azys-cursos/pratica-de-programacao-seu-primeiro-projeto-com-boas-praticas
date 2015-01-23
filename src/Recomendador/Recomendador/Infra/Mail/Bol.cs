@@ -1,4 +1,6 @@
-﻿namespace Recomendador.Playground
+﻿using Recomendador.Dominio;
+
+namespace Recomendador.Infra.Mail
 {
     public class Bol : IServicoEmail
     {

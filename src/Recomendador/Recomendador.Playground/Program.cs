@@ -1,4 +1,8 @@
 ﻿using System;
+using Recomendador.Dominio;
+using Recomendador.Infra.Feeds;
+using Recomendador.Infra.Mail;
+using Recomendador.Infra.Persistencia;
 
 namespace Recomendador.Playground
 {

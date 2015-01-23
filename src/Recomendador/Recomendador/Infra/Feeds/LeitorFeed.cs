@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Recomendador.Dominio;
 using TNX.RssReader;
 
-namespace Recomendador.Playground
+namespace Recomendador.Infra.Feeds
 {
     public class LeitorFeed : ILeitorFeed
     {

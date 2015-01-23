@@ -1,4 +1,4 @@
-﻿namespace Recomendador.Playground
+﻿namespace Recomendador.Dominio
 {
     public class Artigo
     {

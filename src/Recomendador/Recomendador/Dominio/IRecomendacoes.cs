@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 
-namespace Recomendador.Playground
+namespace Recomendador.Dominio
 {
     public interface IRecomendacoes
     {

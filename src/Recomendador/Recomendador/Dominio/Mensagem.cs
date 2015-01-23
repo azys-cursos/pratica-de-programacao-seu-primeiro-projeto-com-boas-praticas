@@ -1,6 +1,6 @@
 ﻿using System.Net.Mail;
 
-namespace Recomendador.Playground
+namespace Recomendador.Dominio
 {
     public class Mensagem
     {

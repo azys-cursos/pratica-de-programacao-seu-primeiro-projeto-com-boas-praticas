@@ -2,8 +2,9 @@
 using System.Linq;
 using MongoDB.Driver;
 using MongoDB.Driver.Linq;
+using Recomendador.Dominio;
 
-namespace Recomendador.Playground
+namespace Recomendador.Infra.Persistencia
 {
     public class Recomendacoes : IRecomendacoes // Possilitar a expensão e evitar alterações.
     {

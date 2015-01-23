@@ -1,8 +1,9 @@
 ﻿using MongoDB.Bson.Serialization;
 using MongoDB.Bson.Serialization.IdGenerators;
 using MongoDB.Driver;
+using Recomendador.Dominio;
 
-namespace Recomendador.Playground
+namespace Recomendador.Infra.Persistencia
 {
     public class MongoDb
     {
