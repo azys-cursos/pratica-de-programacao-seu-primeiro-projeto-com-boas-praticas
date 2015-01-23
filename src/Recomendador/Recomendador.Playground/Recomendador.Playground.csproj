@@ -59,7 +59,9 @@
   <ItemGroup>
     <Compile Include="Artigo.cs" />
     <Compile Include="BlogMartinFowler.cs" />
+    <Compile Include="ContaSmtp.cs" />
     <Compile Include="Gmail.cs" />
+    <Compile Include="MensagemEmail.cs" />
     <Compile Include="MongoDb.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

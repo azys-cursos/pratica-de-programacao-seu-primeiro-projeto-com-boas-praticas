@@ -6,15 +6,16 @@ namespace Recomendador.Playground
     {
         static void Main(string[] args)
         {
+            // Dependências
             var mongodb = MongoDb.GetDatabase();
+            var contaSmtp = new ContaSmtp("Recomendador", "r2d2@azys.com.br", "dfs465789ds47815");
 
+            // Processo
             var recomendacoes = new Recomendacoes(mongodb);
 
-            var usuario = new Usuario()
-            {
-                Email = "denisferrari@azys.com.br"
-            };
-            var hoje = DateTime.Today;
+            var usuario = new Usuario("denisferrari@azys.com.br");
+
+            var hoje = DateTime.Today; // *
 
             var haRecomendacoes = recomendacoes.HaRecomendacoes(usuario, hoje);
 
@@ -27,16 +28,13 @@ namespace Recomendador.Playground
 
             var artigo = blog.ObterArtigoAleatorio(recomendacoesFeitas);
 
-            var servicoEmail = new Gmail();
+            var servicoEmail = new Gmail(contaSmtp);
 
-            servicoEmail.EnviarArtigo(usuario, artigo);
+            var mensagemEmail = new MensagemEmail(usuario, artigo);
 
-            var recomendacao = new Recomendacao()
-            {
-                Usuario = usuario.Email,
-                Artigo = artigo.Url,
-                Data = hoje
-            };
+            servicoEmail.EnviarArtigo(mensagemEmail);
+
+            var recomendacao = new Recomendacao(usuario, artigo, hoje); // *
 
             recomendacoes.Registrar(recomendacao);
 

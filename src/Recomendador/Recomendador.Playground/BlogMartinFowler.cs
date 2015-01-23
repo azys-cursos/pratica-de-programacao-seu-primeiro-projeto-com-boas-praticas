@@ -7,6 +7,8 @@ namespace Recomendador.Playground
 {
     public class BlogMartinFowler
     {
+
+
         public Artigo ObterArtigoAleatorio(IEnumerable<Recomendacao> recomendacoesFeitas)
         {
             var urlFeedBlogMartinFowler = "http://martinfowler.com/feed.atom";
@@ -23,11 +25,7 @@ namespace Recomendador.Playground
             var numeroAleatorio = random.Next(0, artigos.Count());
             var artigoSelecionado = artigos[numeroAleatorio];
 
-            return new Artigo()
-            {
-                Titulo = artigoSelecionado.Title,
-                Url = artigoSelecionado.Link
-            };
+            return new Artigo(artigoSelecionado.Title, artigoSelecionado.Link);
         }
     }
 }

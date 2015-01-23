@@ -5,28 +5,39 @@ namespace Recomendador.Playground
 {
     public class Gmail
     {
-        public void EnviarArtigo(Usuario usuario, Artigo artigo)
-        {
-            var smtpNome = "Recomendador";
-            var smtpEmail = "r2d2@azys.com.br";
-            var smtpSenha = "dfs465789ds47815";
+        public const string HOST = "smtp.gmail.com";
 
-            var smtpClient = new SmtpClient("smtp.gmail.com", 587)
+        public const int PORT = 587;
+
+        public ContaSmtp Conta { get; set; }
+
+        public Gmail(ContaSmtp contaSmtp)
+        {
+            // TODO: Validação!
+
+            this.Conta = contaSmtp;
+        }
+
+        public void EnviarArtigo(MensagemEmail mensagem)
+        {
+            var mailMessage = mensagem.ObterMailMessage();
+
+            var smtpClient = this.ObterSmtpClient();
+
+            mailMessage.From = new MailAddress(this.Conta.Email, this.Conta.Nome);
+
+            smtpClient.Send(mailMessage);
+        }
+
+        public SmtpClient ObterSmtpClient()
+        {
+            return new SmtpClient(HOST, PORT)
             {
                 EnableSsl = true,
                 UseDefaultCredentials = false,
                 DeliveryMethod = SmtpDeliveryMethod.Network,
-                Credentials = new NetworkCredential(smtpEmail, smtpSenha)
+                Credentials = new NetworkCredential(this.Conta.Email, this.Conta.Senha)
             };
-
-            var mailMessage = new MailMessage();
-
-            mailMessage.From = new MailAddress(smtpEmail, smtpNome);
-            mailMessage.Subject = artigo.Titulo;
-            mailMessage.Body = artigo.Url;
-            mailMessage.To.Add(usuario.Email);
-
-            smtpClient.Send(mailMessage);
         }
     }
 }

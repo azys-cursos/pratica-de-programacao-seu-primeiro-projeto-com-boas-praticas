@@ -1,13 +1,24 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Recomendador.Playground
 {
     public class Usuario
     {
-        public string Email { get; set; }
+        public string Email { get; protected set; }
+
+        public Usuario(string email) // denisferrari
+        {
+            // TODO: O e-mail é válido?
+
+            this.AlterarEmail(email);
+        }
+
+        public virtual void AlterarEmail(string email)
+        {
+            if (String.IsNullOrEmpty(email))
+                throw new ArgumentNullException("email");
+
+            this.Email = email;
+        }
     }
 }
