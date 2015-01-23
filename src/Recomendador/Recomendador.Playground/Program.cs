@@ -24,9 +24,11 @@ namespace Recomendador.Playground
 
             var recomendacoesFeitas = recomendacoes.ObterTodas();
 
-            var blog = new BlogMartinFowler();
+            var blogMartinFowler = new Blog("http://martinfowler.com/feed.atom", "articles");
 
-            var artigo = blog.ObterArtigoAleatorio(recomendacoesFeitas);
+            var leitorFeed = new LeitorFeed(blogMartinFowler);
+
+            var artigo = leitorFeed.ObterArtigoAleatorio(recomendacoesFeitas);
 
             var servicoEmail = new Gmail(contaSmtp);
 

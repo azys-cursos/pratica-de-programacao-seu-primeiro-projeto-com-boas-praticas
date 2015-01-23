@@ -58,7 +58,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Artigo.cs" />
-    <Compile Include="BlogMartinFowler.cs" />
+    <Compile Include="Blog.cs" />
+    <Compile Include="LeitorFeed.cs" />
     <Compile Include="ContaSmtp.cs" />
     <Compile Include="Gmail.cs" />
     <Compile Include="MensagemEmail.cs" />
