@@ -3,7 +3,7 @@ using System.Net.Mail;
 
 namespace Recomendador.Playground
 {
-    public class Gmail
+    public class Gmail : IServicoEmail
     {
         public const string HOST = "smtp.gmail.com";
 
@@ -18,7 +18,7 @@ namespace Recomendador.Playground
             this.Conta = contaSmtp;
         }
 
-        public void EnviarArtigo(MensagemEmail mensagem)
+        public void EnviarArtigo(Mensagem mensagem)
         {
             var mailMessage = mensagem.ObterMailMessage();
 

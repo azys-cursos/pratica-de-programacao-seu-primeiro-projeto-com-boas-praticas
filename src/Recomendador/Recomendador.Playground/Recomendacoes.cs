@@ -5,7 +5,7 @@ using MongoDB.Driver.Linq;
 
 namespace Recomendador.Playground
 {
-    public class Recomendacoes // Possilitar a expensão e evitar alterações.
+    public class Recomendacoes : IRecomendacoes // Possilitar a expensão e evitar alterações.
     {
         protected virtual MongoCollection<Recomendacao> Collection { get; set; }
 

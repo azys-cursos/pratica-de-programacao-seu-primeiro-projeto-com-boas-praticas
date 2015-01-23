@@ -2,13 +2,13 @@
 
 namespace Recomendador.Playground
 {
-    public class MensagemEmail
+    public class Mensagem
     {
         public Usuario Usuario { get; set; }
 
         public Artigo Artigo { get; set; }
 
-        public MensagemEmail(Usuario usuario, Artigo artigo)
+        public Mensagem(Usuario usuario, Artigo artigo)
         {
             // TODO: Validação!
 

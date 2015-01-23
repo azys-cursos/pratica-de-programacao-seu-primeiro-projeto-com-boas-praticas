@@ -59,15 +59,20 @@
   <ItemGroup>
     <Compile Include="Artigo.cs" />
     <Compile Include="Blog.cs" />
+    <Compile Include="Bol.cs" />
+    <Compile Include="ILeitorFeed.cs" />
+    <Compile Include="IRecomendacoes.cs" />
+    <Compile Include="IServicoEmail.cs" />
     <Compile Include="LeitorFeed.cs" />
     <Compile Include="ContaSmtp.cs" />
     <Compile Include="Gmail.cs" />
-    <Compile Include="MensagemEmail.cs" />
+    <Compile Include="Mensagem.cs" />
     <Compile Include="MongoDb.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Recomendacao.cs" />
     <Compile Include="Recomendacoes.cs" />
+    <Compile Include="ServicoRecomendacao.cs" />
     <Compile Include="Usuario.cs" />
   </ItemGroup>
   <ItemGroup>

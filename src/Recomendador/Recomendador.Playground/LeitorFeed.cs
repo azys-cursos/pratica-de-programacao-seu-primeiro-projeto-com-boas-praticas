@@ -5,21 +5,14 @@ using TNX.RssReader;
 
 namespace Recomendador.Playground
 {
-    public class LeitorFeed
+    public class LeitorFeed : ILeitorFeed
     {
-        public Blog Blog { get; set; }
-
-        public LeitorFeed(Blog blog)
+        public Artigo ObterArtigoAleatorio(Blog blog, IEnumerable<Recomendacao> recomendacoesFeitas)
         {
-            this.Blog = blog;
-        }
-
-        public Artigo ObterArtigoAleatorio(IEnumerable<Recomendacao> recomendacoesFeitas)
-        {
-            var posts = this.ObterPosts(this.Blog.Feed);
+            var posts = this.ObterPosts(blog.Feed);
 
             var artigos = posts
-                            .Where(p => p.Link.Contains(this.Blog.TermoFiltragem))
+                            .Where(p => p.Link.Contains(blog.TermoFiltragem))
                             .Where(p => !recomendacoesFeitas.Any(r => r.Artigo == p.Link))
                             .ToList();
 

@@ -6,42 +6,25 @@ namespace Recomendador.Playground
     {
         static void Main(string[] args)
         {
-            // Dependências
+            // Dependências Globais
             var mongodb = MongoDb.GetDatabase();
             var contaSmtp = new ContaSmtp("Recomendador", "r2d2@azys.com.br", "dfs465789ds47815");
 
+            // Dependências do Processo
+            IRecomendacoes recomendacoes = new Recomendacoes(mongodb);
+            IServicoEmail servicoEmail = new Gmail(contaSmtp);
+            ILeitorFeed leitorFeed = new LeitorFeed();
+
             // Processo
-            var recomendacoes = new Recomendacoes(mongodb);
-
             var usuario = new Usuario("denisferrari@azys.com.br");
+            var blog = new Blog("http://martinfowler.com/feed.atom", "articles");
+            var referencia = DateTime.Today;
 
-            var hoje = DateTime.Today; // *
+            var servico = new ServicoRecomendacao(recomendacoes, servicoEmail, leitorFeed);
 
-            var haRecomendacoes = recomendacoes.HaRecomendacoes(usuario, hoje);
-
-            if (haRecomendacoes)
-                return;
-
-            var recomendacoesFeitas = recomendacoes.ObterTodas();
-
-            var blogMartinFowler = new Blog("http://martinfowler.com/feed.atom", "articles");
-
-            var leitorFeed = new LeitorFeed(blogMartinFowler);
-
-            var artigo = leitorFeed.ObterArtigoAleatorio(recomendacoesFeitas);
-
-            var servicoEmail = new Gmail(contaSmtp);
-
-            var mensagemEmail = new MensagemEmail(usuario, artigo);
-
-            servicoEmail.EnviarArtigo(mensagemEmail);
-
-            var recomendacao = new Recomendacao(usuario, artigo, hoje); // *
-
-            recomendacoes.Registrar(recomendacao);
+            servico.Recomendar(usuario, blog, referencia);
 
             Console.WriteLine("Recomendação Registrada!");
-            Console.WriteLine("");
             Console.ReadLine();
         }
     }
